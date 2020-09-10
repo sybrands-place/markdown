@@ -745,7 +745,7 @@ abstract class ListSyntax extends BlockSyntax {
           try {
             startNumber = int.parse(digits);
           } catch (e) {
-            startNumber = 1;
+            startNumber = 0;
             isAlpha = true;
           }
         }
