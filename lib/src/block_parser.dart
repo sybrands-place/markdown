@@ -689,35 +689,6 @@ abstract class ListSyntax extends BlockSyntax {
     // In case the first number in an ordered list is not 1, use it as the
     // "start".
     int startNumber;
-    bool isAlpha = false;
-    final letters = [
-      'a',
-      'b',
-      'c',
-      'd',
-      'e',
-      'f',
-      'g',
-      'h',
-      'i',
-      'j',
-      'k',
-      'l',
-      'm',
-      'n',
-      'o',
-      'p',
-      'q',
-      'r',
-      's',
-      't',
-      'u',
-      'v',
-      'w',
-      'x',
-      'y',
-      'z'
-    ];
 
     while (!parser.isDone) {
       var leadingSpace = _whitespaceRe.matchAsPrefix(parser.current).group(0);
@@ -745,8 +716,8 @@ abstract class ListSyntax extends BlockSyntax {
           try {
             startNumber = int.parse(digits);
           } catch (e) {
+            // Implicitly saying it needs to be letters
             startNumber = 0;
-            isAlpha = true;
           }
         }
         var marker = match[3] /*!*/;
@@ -837,8 +808,7 @@ abstract class ListSyntax extends BlockSyntax {
     }
 
     if (listTag == 'ol' && startNumber != 1) {
-      final start = isAlpha ? '${letters[startNumber]}' : '$startNumber';
-      return Element(listTag, itemNodes)..attributes['start'] = start;
+      return Element(listTag, itemNodes)..attributes['start'] = '$startNumber';
     } else {
       return Element(listTag, itemNodes);
     }
